@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1 Welcome to #{title}
+  form(role="form", action="/myupload", method="post", enctype="multipart/form-data")
+    div(class="form-group")
+      input(type="file", name="myfile", id="myfile")
+      input(type="submit", value="Send", method="POST")
