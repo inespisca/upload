@@ -19,17 +19,13 @@ router.get('/myupload', (req, res) => {
 
 router.post('/myupload', upload.array('myfile', 3), function (req, res, next) {
   console.log(req.files)
-  fs.rename(
-    req.files.path,
-    'public/images/' + req.files.originalname,
-    (err) => {
-      if (err) {
-          res.send(err);
-      } else {
-          res.send('your marvelous picture has been wonderfully sent');
-      }
-    }
-  );
+  req.files.forEach(function (file) {
+    fs.renameSync(
+      file.path,
+      'public/images/' + file.originalname,
+    );
+  })
+  res.send('your marvelous picture has been wonderfully sent');
 })
 
 module.exports = router;
