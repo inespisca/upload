@@ -6,10 +6,6 @@ const path = require('path');
 const app = express();
 const indexRouter = require('./routes/index');
 
-/* What's below was added because of the quest */
-
-
-
 /* What's below this came with the generator */
 
 app.set('views', path.join(__dirname, 'views'));
@@ -39,26 +35,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
-/* What's below was added because of the quest */
-
-
-
-function fileFilter (req, file, cb) {
- 
-  // The function should call `cb` with a boolean
-  // to indicate if the file should be accepted
- 
-  // To reject this file pass `false`, like so:
-  cb(null, false)
- 
-  // To accept the file pass `true`, like so:
-  cb(null, true)
- 
-  // You can always pass an error if something goes wrong:
-  cb(new Error("Look at what you've done! Did you just get an error? This marvelous uploader could never get an error!"))
- 
-}
 
 /* This is just here to work */
 

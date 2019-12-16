@@ -2,7 +2,12 @@ const { Router } = require('express');
 const router = Router();
 
 const multer = require('multer');
-const upload = multer({ dest:'tmp/' });
+const upload = multer({
+  dest:'tmp/',
+  limits: {
+    fileSize: 3000000,
+  }
+});
 const fs = require('fs');
 
 /* GET index page. */
@@ -12,14 +17,14 @@ router.get('/myupload', (req, res) => {
   });
 });
 
-router.post('/myupload', upload.single('myfile'), (req, res, next) => {
-  console.log("im running")
+router.post('/myupload', upload.array('myfile', 3), function (req, res, next) {
+  console.log(req.files)
   fs.rename(
-    req.file.path,
-    'public/images/' + req.file.originalname,
+    req.files.path,
+    'public/images/' + req.files.originalname,
     (err) => {
       if (err) {
-          res.send('problem sending your marvelous picture');
+          res.send(err);
       } else {
           res.send('your marvelous picture has been wonderfully sent');
       }
