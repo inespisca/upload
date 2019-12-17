@@ -18,12 +18,16 @@ router.get('/myupload', (req, res) => {
 });
 
 router.post('/myupload', upload.array('myfile', 3), function (req, res, next) {
-  console.log(req.files)
   req.files.forEach(function (file) {
-    fs.renameSync(
-      file.path,
-      'public/images/' + file.originalname,
-    );
+    console.log(file.mimetype)
+    if (file.mimetype === 'image/png') {
+      fs.renameSync(
+        file.path,
+        'public/images/' + file.originalname,
+      );
+    } else {
+      return res.render('error', {err: 'A file you uploaded isnt in png format'})
+    }
   })
   res.send('your marvelous picture has been wonderfully sent');
 })
